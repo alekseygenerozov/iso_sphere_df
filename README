@@ -1,0 +1,3 @@
+Example: Run code with with timesteps 1e-4 and write output to a file called log.
+
+python df_test.py 1e-4|tee log
