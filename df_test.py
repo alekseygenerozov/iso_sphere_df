@@ -7,7 +7,6 @@ from numba import vectorize
 import sys
 import cgs_const as cgs
 from scipy.stats import maxwell
-
 ##Physical constants
 G= 43007.1
 M_scale=1e10*cgs.M_sun
@@ -20,25 +19,25 @@ def gen_ran_vector(n):
 	'''
 	Generate n isotropic vectors.
 	'''
-    phi=np.random.uniform(0.,2.*np.pi, size=n)
-    ct=np.random.uniform(-1,1,size=n)
-    st=(1.-ct**2.)**0.5
-    return np.transpose([st*np.cos(phi), st*np.sin(phi), ct])
+	phi=np.random.uniform(0.,2.*np.pi, size=n)
+	ct=np.random.uniform(-1,1,size=n)
+	st=(1.-ct**2.)**0.5
+	return np.transpose([st*np.cos(phi), st*np.sin(phi), ct])
 
 def gen_iso_sphere(n, v0, rmax=10.):
-    '''
-    Generate particle velocities and positions for an isothermal sphere
-    '''
-    pos=np.zeros([n, 3])
-    vel=np.zeros([n, 3])
+	'''
+	Generate particle velocities and positions for an isothermal sphere
+	'''
+	pos=np.zeros([n, 3])
+	vel=np.zeros([n, 3])
 
-    r=np.random.uniform(0,rmax, size=n)
-    v=maxwell.rvs(scale=v0, size=n)
-    pos=gen_ran_vector(n)*np.expand_dims(r, axis=1)
-    vel=gen_ran_vector(n)*np.expand_dims(v, axis=1)
-    ##Total mass of iso sphere (from integrating density....)
-    mtot=4.*np.pi*v0**2./(2*np.pi*G)*rmax
-    return pos, vel, mtot/n
+	r=np.random.uniform(0,rmax, size=n)
+	v=maxwell.rvs(scale=v0, size=n)
+	pos=gen_ran_vector(n)*np.expand_dims(r, axis=1)
+	vel=gen_ran_vector(n)*np.expand_dims(v, axis=1)
+	##Total mass of iso sphere (from integrating density....)
+	mtot=4.*np.pi*v0**2./(2*np.pi*G)*rmax
+	return pos, vel, mtot/n
 
 
 ############################################
